@@ -60,6 +60,8 @@ const NavBar = () => {
                     <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                         <li><NavLink to={"/"}>HOME</NavLink></li>
                         <li><NavLink to={"/dashboard"}>DASHBOARD</NavLink></li>
+                        <li><NavLink to={"/about"}>ABOUT US</NavLink></li>
+                        <li><NavLink to={"/contact"}>CONTACT US</NavLink></li>
                     </ul>
                 </div>
                 <Link to={"/"} className="text-sm md:text-3xl tracking-wide md:tracking-widest lg:ml-8 uppercase">Task Master</Link>
@@ -69,6 +71,8 @@ const NavBar = () => {
                 <ul className="menu menu-horizontal px-1">
                     <li><NavLink to={"/"}>HOME</NavLink></li>
                     <li><NavLink to={"/dashboard"}>DASHBOARD</NavLink></li>
+                    <li><NavLink to={"/about"}>ABOUT US</NavLink></li>
+                    <li><NavLink to={"/contact"}>CONTACT US</NavLink></li>
                 </ul>
             </div>
 

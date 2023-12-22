@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import MainCover from "../main_cover/MainCover";
+import Testimonials from "../testimonials/Testimonials";
 
 
 const Home = () => {
@@ -9,6 +10,7 @@ const Home = () => {
     return (
         <div>
             <MainCover></MainCover>
+            <Testimonials></Testimonials>
         </div>
     );
 };

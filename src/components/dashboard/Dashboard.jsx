@@ -14,6 +14,7 @@ const Dashboard = () => {
     const [tasks, setTasks] = useState([])
 
     useEffect(() => {
+        window.scrollTo(1, 1);
         // setTasks(JSON.parse(localStorage.getItem('tasks')) || [])
         if (user)
             secureAxios.get(`/tasks?email=${user.email}`).then(res => setTasks(res.data))

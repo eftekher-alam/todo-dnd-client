@@ -1,11 +1,10 @@
-import { useContext, useEffect } from "react"
+import { useEffect } from "react"
 import { useState } from "react"
 import { useDrag, useDrop } from 'react-dnd'
 import { FaRegTrashAlt } from "react-icons/fa";
 import useSecureAxios from "../../hooks/useSecureAxios";
 import { toast } from "react-toastify";
 import { FaRegEdit } from "react-icons/fa";
-import { AuthContext } from "../../providers/auth_provider/AuthProvider";
 import { useNavigate } from "react-router-dom";
 
 export default function ListTask({ tasks, setTasks }) {

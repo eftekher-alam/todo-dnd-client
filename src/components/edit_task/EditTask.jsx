@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import useSecureAxios from "../../hooks/useSecureAxios";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const EditTask = () => {
@@ -49,8 +49,7 @@ const EditTask = () => {
 
     return (
 
-        <div className="flex justify-center items-center mt-10">
-
+        <div className="flex flex-col justify-center items-center mt-10">
             <form onSubmit={handleUpdate} className="w-10/12 lg:w-1/2">
                 <h1 className="text-sm text-center pb-6 md:text-3xl tracking-wide md:tracking-widest uppercase">Edit Task</h1>
                 <input type="text" name="_id" defaultValue={task._id} hidden />
@@ -85,7 +84,9 @@ const EditTask = () => {
                     <button type="submit" className="btn btn-warning btn-sm btn-outline md:w-2/6 mt-9">Update</button>
                 </div>
             </form >
+            <Link to={"/dashboard"} className="btn btn-warning btn-sm btn-outline mt-9">Back to dashboard</Link>
         </div>
+
 
     );
 };

@@ -7,6 +7,8 @@ import Register from "../components/register/Register";
 import Dashboard from "../components/dashboard/Dashboard";
 import PrivateRoute from './PrivateRoute';
 import EditTask from "../components/edit_task/EditTask";
+import Contact from "../components/contact/Contact";
+import About from "../components/about/About";
 
 
 const router = createBrowserRouter([
@@ -34,6 +36,14 @@ const router = createBrowserRouter([
             {
                 path: "/edit-task/:id",
                 element: <PrivateRoute><EditTask></EditTask></PrivateRoute>
+            },
+            {
+                path: "/contact",
+                element: <Contact></Contact>
+            },
+            {
+                path: "/about",
+                element: <About></About>
             }
         ]
     }
