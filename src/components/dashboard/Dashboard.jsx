@@ -1,21 +1,26 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { Toaster } from "react-hot-toast";
 import CreateTask from "../create_task/CreateTask";
 import ListTask from "../list_task/ListTask";
 import useSecureAxios from "../../hooks/useSecureAxios";
+import { AuthContext } from "../../providers/auth_provider/AuthProvider";
 
 
 const Dashboard = () => {
     const secureAxios = useSecureAxios()
-
+    const { user } = useContext(AuthContext);
     const [tasks, setTasks] = useState([])
 
     useEffect(() => {
         // setTasks(JSON.parse(localStorage.getItem('tasks')) || [])
-        secureAxios.get("/todoList").then(res => console.log(res.data))
-    }, [secureAxios])
+        if (user)
+            secureAxios.get(`/tasks?email=${user.email}`).then(res => setTasks(res.data))
+    }, [secureAxios, user])
+
+
+    console.log("dashboard task list", tasks);
 
     return (
         <DndProvider backend={HTML5Backend}>
@@ -28,7 +33,7 @@ const Dashboard = () => {
                     <p className='text-center text-slate-500'>Drag and drop tasks to change their status</p>
                 </div>
                 <CreateTask tasks={tasks} setTasks={setTasks} />
-                {/* <ListTask tasks={tasks} setTasks={setTasks} /> */}
+                <ListTask tasks={tasks} setTasks={setTasks} />
             </div>
             <a
                 href="https://github.com/iamnullman/react-todo-list"

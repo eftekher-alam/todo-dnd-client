@@ -1,15 +1,17 @@
-import { useState } from "react"
-import { v4 as uuidv4 } from 'uuid';
+import { useContext, useState } from "react"
 import toast from 'react-hot-toast';
+import { AuthContext } from "../../providers/auth_provider/AuthProvider";
+import useSecureAxios from "../../hooks/useSecureAxios";
 
 // eslint-disable-next-line react/prop-types
 export default function CreateTask({ tasks, setTasks }) {
+    const secureAxios = useSecureAxios()
+    const { user } = useContext(AuthContext);
     const [task, setTask] = useState({
         name: '',
-        id: '',
         status: 'todo',
     })
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
 
         if (!task.name)
@@ -25,27 +27,32 @@ export default function CreateTask({ tasks, setTasks }) {
         if (task.name.length > 20)
             return toast('Task name must be less than 20 characters', { icon: <i className="fa-solid fa-bomb text-red-900 font-bold" />, className: "font-bold" })
 
-        setTasks((prev) => {
-            const list = [...prev, task]
+        task.email = user.email;
 
-            localStorage.setItem('tasks', JSON.stringify(list))
-
-            return list
+        await secureAxios.post("/task", task).then(res => {
+            if (res.success) {
+                toast.success('Task created successfully', { icon: <i className="fa-solid fa-party-horn text-green-900 font-bold" />, className: "font-bold" })
+            }
         })
+
+        await secureAxios.get(`/tasks?email=${user.email}`).then(res => {
+            console.log("after add new", res.data);
+            setTasks(res.data);
+        })
+
+
         setTask({
             name: '',
-            id: '',
             status: 'todo',
         })
 
-        toast.success('Task created successfully', { icon: <i className="fa-solid fa-party-horn text-green-900 font-bold" />, className: "font-bold" })
     }
     return (
 
         <form onSubmit={handleSubmit}>
             <input
                 onChange={(e) => {
-                    setTask({ ...task, name: e.target.value, id: uuidv4() })
+                    setTask({ ...task, name: e.target.value })
                 }}
                 type="text"
                 value={task.name}
