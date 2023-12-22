@@ -28,9 +28,9 @@ const Dashboard = () => {
                 duration: 3000,
             }} />
             <div className='w-screen -h-screen flex flex-col items-center pt-3 gap-16 mt-12'>
-                <div>
-                    <h1 className="text-sm md:text-3xl tracking-wide md:tracking-widest lg:ml-8 uppercase">Task Master Dashboard</h1>
-                    <p className='text-center text-slate-500'>Drag and drop tasks to change their status</p>
+                <div className="flex flex-col items-center justify-center">
+                    <h1 className="text-sm md:text-3xl tracking-wide md:tracking-widest uppercase">Task Master Dashboard</h1>
+                    <p className=' text-slate-500'>Drag and drop tasks to change their status</p>
                 </div>
                 <CreateTask tasks={tasks} setTasks={setTasks} />
                 <ListTask tasks={tasks} setTasks={setTasks} />

@@ -27,20 +27,26 @@ export default function ListTask({ tasks, setTasks }) {
 }
 
 function Section({ status, tasks, setTasks, todos, inProgress, done }) {
-    const text = status === 'todo' ? 'To Do' : status === 'progress' ? 'In Progress' : 'Done'
-    const bg = status === 'todo' ? 'bg-red-500' : status === 'progress' ? 'bg-yellow-500' : 'bg-green-500'
-    const tasksToMap = status === 'todo' ? todos : status === 'progress' ? inProgress : done
+    const secureAxios = useSecureAxios()
+    const text = (status === 'todo') ? 'To Do' : (status === 'progress') ? 'In Progress' : 'Done'
+    const bg = (status === 'todo') ? 'bg-red-500' : (status === 'progress') ? 'bg-yellow-500' : 'bg-green-500'
+    const tasksToMap = (status === 'todo') ? todos : (status === 'progress') ? inProgress : done
     const [{ isOver }, drop] = useDrop(() => ({
         accept: "task",
         drop: (item) => {
             setTasks((prev) => {
                 const list = prev.map((task) => {
-                    if (task.id === item.id) {
-                        return { ...task, status }
+                    if (task._id === item._id) {
+                        const changedTask = { ...task, status };
+                        secureAxios.patch("/task", changedTask).then(res => {
+                            if (res.data.success) {
+                                toast.success(`Task successfully moved to ${status}`)
+                            }
+                        })
+                        return changedTask;
                     }
                     return task
                 })
-                localStorage.setItem('tasks', JSON.stringify(list))
                 return list
             })
         },
@@ -73,7 +79,7 @@ function Task({ task, tasks, setTasks }) {
     const secureAxios = useSecureAxios()
     const [{ isDragging }, drag] = useDrag(() => ({
         type: "task",
-        item: { id: task.id },
+        item: { _id: task._id },
         collect: (monitor) => ({
             isDragging: !!monitor.isDragging()
         })
