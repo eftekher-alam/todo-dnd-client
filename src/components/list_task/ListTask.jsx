@@ -1,9 +1,12 @@
-import { useEffect } from "react"
+import { useContext, useEffect } from "react"
 import { useState } from "react"
 import { useDrag, useDrop } from 'react-dnd'
 import { FaRegTrashAlt } from "react-icons/fa";
 import useSecureAxios from "../../hooks/useSecureAxios";
 import { toast } from "react-toastify";
+import { FaRegEdit } from "react-icons/fa";
+import { AuthContext } from "../../providers/auth_provider/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 export default function ListTask({ tasks, setTasks }) {
     const [todos, setTodos] = useState(tasks.filter((t) => t.status == 'todo'))
@@ -77,6 +80,8 @@ function Header({ text, bg, count }) {
 
 function Task({ task, tasks, setTasks }) {
     const secureAxios = useSecureAxios()
+    const navigate = useNavigate();
+
     const [{ isDragging }, drag] = useDrag(() => ({
         type: "task",
         item: { _id: task._id },
@@ -102,12 +107,28 @@ function Task({ task, tasks, setTasks }) {
         setTasks(newTasks);
     }
 
+
     return (
         <div ref={drag} className={
-            `relative flex items-center bg-zinc-200 p-4 mt-8 shadow-md rounded-lg cursor-grab ${isDragging ? 'opacity-50' : 'opacity-100'}`
+            `relative flex items-center  p-4 mt-8 shadow-md rounded-lg cursor-grab
+            ${(task.priority === "High") ? "bg-red-200" : (task.priority === "Moderate") ? "bg-yellow-200" : "bg-green-200"}
+             ${isDragging ? 'opacity-50' : 'opacity-100'}`
         }>
-            <p className="text-sm">{task.name}</p>
-            <FaRegTrashAlt className="fas fa-trash ml-auto text-red-500 cursor-pointer" onClick={async () => handlerDelete(task._id)}></FaRegTrashAlt>
+            <div className="flex items-center justify-between w-full">
+                <div>
+                    <p className="font-bold">{task.name}</p>
+                    <p className={`text-sm`}>Priority : <span className={` font-semibold ${(task.priority === "High") ? "text-red-500" : (task.priority === "Moderate") ? "text-yellow-500" : "text-green-500"}`}>{task.priority}</span></p>
+                    <p className="text-sm">{task.desc}</p>
+                </div>
+                <div className="flex gap-2">
+                    <FaRegTrashAlt className="ml-auto text-red-500 cursor-pointer text-xl" onClick={async () => handlerDelete(task._id)}></FaRegTrashAlt>
+                    <FaRegEdit className="ml-auto text-blue-500 cursor-pointer text-xl" onClick={() => {
+                        navigate(`/edit-task/${task?._id}`);
+                    }} />
+                </div>
+            </div>
+
+
         </div>
     )
 }

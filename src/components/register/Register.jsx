@@ -45,7 +45,7 @@ const Register = () => {
                     .then(() => {
                         createUserMongoDB();
                         toast.success('account created successfully');
-                        navigate(currLocation?.state ? currLocation?.state : "/");
+                        navigate(currLocation?.state ? currLocation?.state : "/dashboard");
                         window.location.reload();
                     })
                     .catch(error => {
@@ -62,7 +62,7 @@ const Register = () => {
             .then(() => {
                 createUserMongoDB();
                 toast.success('account created successfully');
-                navigate(currLocation?.state ? currLocation?.state : "/");
+                navigate(currLocation?.state ? currLocation?.state : "/dashboard");
             })
             .catch(error => {
                 toast.error(error.message);
@@ -74,7 +74,7 @@ const Register = () => {
             .then(() => {
                 createUserMongoDB();
                 toast.success('account created successfully');
-                navigate(currLocation?.state ? currLocation?.state : "/");
+                navigate(currLocation?.state ? currLocation?.state : "/dashboard");
             })
             .catch(error => {
                 toast.error(error.message);

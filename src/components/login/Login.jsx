@@ -25,7 +25,7 @@ const Login = () => {
         signIn(email, password)
             .then(() => {
                 toast.success('login successful');
-                navigate(currLocation?.state ? currLocation?.state : "/");
+                navigate(currLocation?.state ? currLocation?.state : "/dashboard");
             })
             .catch(error => {
                 if (error.code.toString() == "auth/invalid-login-credentials")
@@ -39,7 +39,7 @@ const Login = () => {
             .then(() => {
                 createUserMongoDB();
                 toast.success('login successful');
-                navigate(currLocation?.state ? currLocation?.state : "/");
+                navigate(currLocation?.state ? currLocation?.state : "/dashboard");
             })
             .catch(error => {
                 toast.error(error.message);
@@ -51,7 +51,7 @@ const Login = () => {
             .then(() => {
                 createUserMongoDB();
                 toast.success('login successful');
-                navigate(currLocation?.state ? currLocation?.state : "/");
+                navigate(currLocation?.state ? currLocation?.state : "/dashboard");
             })
             .catch(error => {
                 toast.error(error.message);

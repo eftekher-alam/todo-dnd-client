@@ -5,6 +5,8 @@ import ErrorPage from "../components/error_page/ErrorPage";
 import Login from "../components/login/Login";
 import Register from "../components/register/Register";
 import Dashboard from "../components/dashboard/Dashboard";
+import PrivateRoute from './PrivateRoute';
+import EditTask from "../components/edit_task/EditTask";
 
 
 const router = createBrowserRouter([
@@ -27,7 +29,11 @@ const router = createBrowserRouter([
             },
             {
                 path: "/dashboard",
-                element: <Dashboard></Dashboard>
+                element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>
+            },
+            {
+                path: "/edit-task/:id",
+                element: <PrivateRoute><EditTask></EditTask></PrivateRoute>
             }
         ]
     }
