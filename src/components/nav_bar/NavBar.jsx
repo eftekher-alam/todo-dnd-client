@@ -59,15 +59,16 @@ const NavBar = () => {
                     </label>
                     <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                         <li><NavLink to={"/"}>HOME</NavLink></li>
+                        <li><NavLink to={"/dashboard"}>DASHBOARD</NavLink></li>
                     </ul>
                 </div>
-                <Link to={"/"} className="normal-case text-sm md:text-3xl tracking-wide md:tracking-widest lg:ml-8 ">BEAUTY BLOSSOM</Link>
+                <Link to={"/"} className="text-sm md:text-3xl tracking-wide md:tracking-widest lg:ml-8 uppercase">Task Master</Link>
             </div>
 
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
                     <li><NavLink to={"/"}>HOME</NavLink></li>
-
+                    <li><NavLink to={"/dashboard"}>DASHBOARD</NavLink></li>
                 </ul>
             </div>
 

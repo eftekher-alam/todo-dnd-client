@@ -1,10 +1,13 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../providers/auth_provider/AuthProvider";
 
 const MainCover = () => {
+    const { user } = useContext(AuthContext);
     return (
         <div
             className="hero min-h-[85vh]"
-            style={{ backgroundImage: 'url(https://i.ibb.co/ZhGcsFr/main-cover.jpg)' }}
+            style={{ backgroundImage: 'url(https://i.ibb.co/tYGb037/todo-bannar.jpg)' }}
             data-aos="fade-zoom-in"
             data-aos-easing="ease-in-back"
             data-aos-delay="150"
@@ -18,10 +21,13 @@ const MainCover = () => {
                     data-aos-delay="400"
                     data-aos-offset="0"
                 >
-                    <h3 className="mb-5 text-3xl tracking-widest text-neutral font-thin">TOUCH</h3>
-                    <h1 className="mb-5 text-6xl tracking-widest text-neutral font-light">PREMIUM</h1>
-                    <p className="mb-5 text-neutral tracking-widest font-light">Discover the Magic of Cosmetics <br /> Where Beauty Meets Confidence, Naturally</p>
-                    <Link to={"/products"} className="btn btn-outline tracking-widest font-light">Shop Now</Link>
+                    <h1 className="mb-5 text-6xl tracking-widest text-neutral font-light">Task Master</h1>
+                    <p className="mb-5 text-neutral tracking-widest font-light">The ultimate todo app designed to simplify your life.</p>
+                    {
+                        user ? <Link to={"/dashboard"} className="btn btn-outline tracking-widest font-light">{`Let’s Explore`}</Link>
+                            : <Link to={"/login"} className="btn btn-outline tracking-widest font-light">{`Let’s Explore`}</Link>
+                    }
+
                 </div>
             </div>
         </div>
