@@ -1,8 +1,9 @@
 import { useEffect } from "react"
 import { useState } from "react"
 import { useDrag, useDrop } from 'react-dnd'
-import toast from 'react-hot-toast';
 import { FaRegTrashAlt } from "react-icons/fa";
+import useSecureAxios from "../../hooks/useSecureAxios";
+import { toast } from "react-toastify";
 
 export default function ListTask({ tasks, setTasks }) {
     const [todos, setTodos] = useState(tasks.filter((t) => t.status == 'todo'))
@@ -69,6 +70,7 @@ function Header({ text, bg, count }) {
 }
 
 function Task({ task, tasks, setTasks }) {
+    const secureAxios = useSecureAxios()
     const [{ isDragging }, drag] = useDrag(() => ({
         type: "task",
         item: { id: task.id },
@@ -76,19 +78,30 @@ function Task({ task, tasks, setTasks }) {
             isDragging: !!monitor.isDragging()
         })
     }))
+
+    const handlerDelete = async (taskId) => {
+        await secureAxios.delete(`/task/${taskId}`).then(
+            res => {
+                if (res.data.success) {
+                    toast.success('Task deleted successfully');
+                }
+                else {
+                    toast.error("Failed to delete");
+                    return;
+                }
+            }
+        );
+
+        const newTasks = await tasks.filter((t) => t._id !== taskId);
+        setTasks(newTasks);
+    }
+
     return (
         <div ref={drag} className={
             `relative flex items-center bg-zinc-200 p-4 mt-8 shadow-md rounded-lg cursor-grab ${isDragging ? 'opacity-50' : 'opacity-100'}`
         }>
             <p className="text-sm">{task.name}</p>
-            <FaRegTrashAlt className="fas fa-trash ml-auto text-red-500 cursor-pointer" onClick={() => {
-                setTasks((prev) => {
-                    const list = prev.filter((t) => t.id !== task.id)
-                    localStorage.setItem('tasks', JSON.stringify(list))
-                    toast('Task deleted successfully', { icon: <i className="fa-solid fa-bomb text-red-900 font-bold" />, className: "font-bold" })
-                    return list
-                })
-            }}></FaRegTrashAlt>
+            <FaRegTrashAlt className="fas fa-trash ml-auto text-red-500 cursor-pointer" onClick={async () => handlerDelete(task._id)}></FaRegTrashAlt>
         </div>
     )
 }
